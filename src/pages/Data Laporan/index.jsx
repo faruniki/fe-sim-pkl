@@ -11,7 +11,7 @@ import Sidebar from "../../components/Sidebar";
 
 const defaultTheme = createTheme();
 
-export default function Pemberangkatan() {
+export default function DataLaporan() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
@@ -35,7 +35,7 @@ export default function Pemberangkatan() {
               marginBottom: "1.7%",
             }}
           >
-            <h2>Permintaan PKL</h2>
+            <h2>Data Laporan</h2>
             <p>Coding disini</p>
           </div>
         </Box>
