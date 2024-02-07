@@ -20,11 +20,14 @@ import ListItemText from "@mui/material/ListItemText";
 import GroupIcon from "@mui/icons-material/Group";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@emotion/react";
+import { Toaster } from 'react-hot-toast';
 
-import DateRangeIcon from '@mui/icons-material/DateRange';  
-import StickyNote2Icon from '@mui/icons-material/StickyNote2';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import StickyNote2Icon from "@mui/icons-material/StickyNote2";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
+import LogoutIcon from "@mui/icons-material/Logout";
+import toast from "react-hot-toast";
 
 const iconArray = [DateRangeIcon, StickyNote2Icon, WarehouseIcon, GroupIcon];
 
@@ -112,8 +115,17 @@ export default function Sidebar(WikramaLogo) {
     setOpen(false);
   };
 
+  const handleLogout = () => {
+    document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    toast.success("Logout berhasil");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 2000);
+  };
+
   return (
     <ThemeProvider theme={theme}>
+      <Toaster />
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar
@@ -153,7 +165,12 @@ export default function Sidebar(WikramaLogo) {
               aria-label="menu"
               sx={{ width: "40px", mr: 2 }}
             >
-              <img src="https://smkwikrama.sch.id/assets2/wikrama-logo.png" alt="Wikrama Logo" width={"40px"} style={{marginLeft: "20px"}} />
+              <img
+                src="https://smkwikrama.sch.id/assets2/wikrama-logo.png"
+                alt="Wikrama Logo"
+                width={"40px"}
+                style={{ marginLeft: "20px" }}
+              />
             </IconButton>
             <Typography
               noWrap
@@ -164,14 +181,18 @@ export default function Sidebar(WikramaLogo) {
                 fontFamily: "Montserrat",
                 fontWeight: 700,
                 fontSize: 18,
-                marginLeft: "14px"
+                marginLeft: "14px",
               }}
             >
               Sistem Informasi Manajemen{" "}
               <span style={{ color: "#ffeb38" }}>Praktek Kerja Lapangan</span>
             </Typography>
-            <Stack direction="row" spacing={1} sx={{color: "#fff", mr: "-10px"}}>
-            <AccountCircleIcon style={{width: "70px"}}/>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ color: "#fff", mr: "-10px" }}
+            >
+              <AccountCircleIcon style={{ width: "70px" }} />
             </Stack>
           </Toolbar>
         </AppBar>
@@ -180,13 +201,10 @@ export default function Sidebar(WikramaLogo) {
             sx={{
               color: "#000",
               width: "50px",
-              ml: "190px"
+              ml: "190px",
             }}
           >
-            <IconButton
-              onClick={handleDrawerClose}
-              style={{ width: "40px"}}
-            >
+            <IconButton onClick={handleDrawerClose} style={{ width: "40px" }}>
               {theme.direction === "rtl" ? (
                 <ChevronRightIcon style={{ width: "50px" }} />
               ) : (
@@ -195,7 +213,7 @@ export default function Sidebar(WikramaLogo) {
             </IconButton>
           </DrawerHeader>
           <Divider />
-          <List sx={{ fontFamily: "Montserrat"}}>
+          <List sx={{ fontFamily: "Montserrat" }}>
             {[
               { text: "Pemberangkatan", path: "/jadwal-pemberangkatan" },
               { text: "Permintaan", path: "/permintaan-pkl" },
@@ -230,37 +248,36 @@ export default function Sidebar(WikramaLogo) {
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
-                {item.text === "Manajemen" && open && (
-                  <List sx={{ paddingLeft: 2, fontSize: 12 }}>
-                    {["Perusahaan", "Gudang", "Komoditas", "Sub Komoditas"].map(
-                      (subItem, subIndex) => (
-                        <ListItem key={subItem} disablePadding>
-                          <Link
-                            to={`/${subItem
-                              .toLowerCase()
-                              .replace(/\s+/g, "-")}`}
-                            style={{ textDecoration: "none" }}
-                          >
-                            <ListItemButton
-                              sx={{ minHeight: 48, color: "#000" }}
-                            >
-                              <ListItemText
-                                primary={subItem}
-                                primaryTypographyProps={{
-                                  variant: "body2",
-                                }}
-                              />
-                            </ListItemButton>
-                          </Link>
-                        </ListItem>
-                      )
-                    )}
-                  </List>
-                )}
               </ListItem>
             ))}
           </List>
           <Divider />
+          <ListItem key="Logout" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              component={Link}
+              onClick={handleLogout}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                  color: "red",
+                }}
+              >
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Logout"
+                sx={{ opacity: open ? 1 : 0, color: "red" }}
+              />
+            </ListItemButton>
+          </ListItem>
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
