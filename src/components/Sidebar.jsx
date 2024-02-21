@@ -19,8 +19,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import GroupIcon from "@mui/icons-material/Group";
 import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
 import { ThemeProvider } from "@emotion/react";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
@@ -225,29 +226,31 @@ export default function Sidebar(WikramaLogo) {
                 disablePadding
                 sx={{ display: "block" }}
               >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                  component={Link}
-                  to={item.path}
-                >
-                  <ListItemIcon
+                <Tooltip title={item.text} placement="right">
+                  <ListItemButton
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
                     }}
+                    component={Link}
+                    to={item.path}
                   >
-                    {React.createElement(iconArray[index % iconArray.length])}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.text}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {React.createElement(iconArray[index % iconArray.length])}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={item.text}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </Tooltip>
               </ListItem>
             ))}
           </List>

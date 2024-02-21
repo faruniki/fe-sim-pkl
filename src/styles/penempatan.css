@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Oswald:wght@300;400;500&family=Playfair+Display:wght@400;500&family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+body {
+  height: 100%;
+  font-family: "Montserrat", sans-serif;
+  background: #1f3984;
+  margin: 0;
+}
+
+.buttonTambah {
+    padding: 0px 20px;
+    background-color: #1f3984;
+    width: fit-content;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-top: 4px;
+    height: 30px;
+    transition: all 0.2s;
+}
+
+.buttonTambah:hover {
+    background-color: #1a2e6b;
+}
+
+.buttonDelete {
+    padding: 0px 20px;
+    background-color: #f35c65;
+    width: fit-content;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-top: 4px;
+    height: 30px;
+    transition: all 0.2s;
+    color: #fff;
+    border: 1px solid #f35c65;
+}
+
+.buttonDelete:hover {
+    background-color: #e05861;
+
+}

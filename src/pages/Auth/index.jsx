@@ -4,7 +4,20 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 
+import smkhebat from "../../assets/images/smkhebat.png";
+import wikramalogo from "../../assets/images/wikrama-logo.png";
+import bogorlogo from "../../assets/images/bogor.png";
+
 const Login = () => {
+
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString("id", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -83,8 +96,18 @@ const Login = () => {
           {error && <p>{error}</p>}
         </center>
       </div>
-      <div className="right">{/* Your other content */}</div>
-    </div>
+      <div className="right">
+        <p className="tanggal">{formattedDate}</p>
+        <br />
+        <p className="sim-pkl">
+          Sistem Informasi Manajemen <span>Praktek Kerja Lapangan</span>
+        </p>
+        <div className="logo-list">
+          <img src={smkhebat} alt="" />
+          <img src={wikramalogo} alt="" />
+          <img src={bogorlogo} alt="" />
+        </div>
+      </div>    </div>
   );
 };
 
