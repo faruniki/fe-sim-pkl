@@ -6,3 +6,20 @@ body {
   background: #1f3984;
   margin: 0;
 }
+
+.buttonTambah {
+  padding: 0px 20px;
+  background-color: #1f3984;
+  width: fit-content;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-top: 4px;
+  height: 30px;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.buttonTambah:hover {
+  background-color: #1a2e6b;
+}

@@ -306,36 +306,6 @@ export default function Penempatan() {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      namaLengkap: "Najib Fahruna Akbar",
-      nis: "12108643",
-      rombel: "PPLG XII-3",
-      rayon: "Wikrama 4",
-      gelombang: "2 (Dua)",
-      perusahaan: "PT Exorty Indonesia",
-    },
-    {
-      id: 2,
-      namaLengkap: "Dzaki Nur Muhammad Aflah",
-      nis: "12108643",
-      rombel: "PPLG XII-3",
-      rayon: "Ciawi 9",
-      gelombang: "2 (Dua)",
-      perusahaan: "PT Ada di Tanggerang",
-    },
-    {
-      id: 3,
-      namaLengkap: "Muhammad Riyan Firdaus",
-      nis: "12108643",
-      rombel: "PPLG XII-9",
-      rayon: "Ciawi 1",
-      gelombang: "2 (Dua)",
-      perusahaan: "PT Ada di Gatau",
-    },
-  ];
-
   const [currentGelombang, setCurrentGelombang] = React.useState(1);
 
   const currentYear = new Date().getFullYear();

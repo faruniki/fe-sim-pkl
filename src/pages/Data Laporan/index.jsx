@@ -1,10 +1,11 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { createTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import Cookies from "js-cookie";
 
 import "../../styles/laporan.css";
 import { ThemeProvider } from "@emotion/react";
@@ -19,73 +20,117 @@ import Sidebar from "../../components/Sidebar";
 const theme = createTheme();
 
 export default function DataLaporan() {
+
+  const [currentGelombang, setCurrentGelombang] = React.useState(1);
+
+  const currentYear = new Date().getFullYear();
+
+  const token = Cookies.get("token") || "";
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  // read gelombang 1
+  const [dataLaporan, setDataLaporan] = useState([]);
+
+  async function fetchLaporan() {
+    try {
+      setDataLaporan([]);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/jadwal`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const { data } = await response.json();
+        setDataLaporan(data);
+      } else if (response.status === 404) {
+        setDataLaporan([]);
+      }
+    } catch (error) {
+      // Handle error
+    }
+  }
+
+  useEffect(() => {
+    fetchLaporan();
+  }, [])
+
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
-      field: "namaLengkap",
+      field: "name",
       headerName: "Nama Lengkap",
-      width: 250,
+      width: 300,
       editable: true,
     },
     {
       field: "nis",
       headerName: "NIS",
-      width: 150,
+      width: 300,
       editable: true,
     },
     {
       field: "rombel",
       headerName: "Rombel",
-      width: 150,
+      width: 300,
       editable: true,
     },
     {
       field: "rayon",
       headerName: "Rayon",
-      width: 140,
-      editable: true,
-    },
-    {
-      field: "gelombang",
-      headerName: "Gelombang",
-      width: 140,
-      editable: true,
-    },
-    {
-      field: "perusahaan",
-      headerName: "Perusahaan",
       width: 250,
       editable: true,
     },
     {
-      field: "nilai",
-      headerName: "Nilai",
-      width: 110,
+      field: "priode",
+      headerName: "Gelombang",
+      width: 250,
       editable: true,
     },
     {
-      field: "sertifikasi",
-      headerName: "Sertifikasi",
-      width: 110,
+      field: "pt",
+      headerName: "Perusahaan",
+      width: 250,
       editable: true,
     },
-    {
-      field: "laporan",
-      headerName: "Laporan",
-      width: 110,
-      editable: true,
-    },
+    // {
+    //   headerClassName: "super-app-theme--header",
+    //   align: "center",
+    //   headerAlign: "center",
+    //   field: "actions",
+    //   type: "actions",
+    //   headerName: "Actions",
+    //   width: 160,
+    //   cellClassName: "actions",
+    //   getActions: (rowData) => {
+    //     return [
+    //       <Tooltip title="Edit Data">
+    //         <GridActionsCellItem
+    //           icon={<EditIcon />}
+    //           label="Edit Master Gudang"
+    //           className="textPrimary"
+    //           color="inherit"
+    //           sx={{ width: "40px" }}
+    //           onClick={() => handleEditClick(rowData)}
+    //         />
+    //       </Tooltip>,
+    //       <Tooltip title="Delete Data">
+    //         <GridActionsCellItem
+    //           icon={<DeleteIcon />}
+    //           label="Delete"
+    //           color="inherit"
+    //           sx={{ width: "40px", color: "#f35c65" }}
+    //           onClick={() => openDeleteConfirmationModal(rowData.id)}
+    //         />
+    //       </Tooltip>,
+    //     ];
+    //   },
+    // },
   ];
-
-  const rows = [
-    { id: 1, namaLengkap: "Najib Fahruna Akbar", nis: "12108643", rombel: "PPLG XII-3", rayon: "Wikrama 4", gelombang: "2 (Dua)", perusahaan: "PT Exorty Indonesia", nilai: "90", sertifikasi: "Ada", laporan: "Selesai" },
-    { id: 2, namaLengkap: "Dzaki Nur Muhammad Aflah", nis: "12108643", rombel: "PPLG XII-3", rayon: "Ciawi 9", gelombang: "2 (Dua)", perusahaan: "PT Ada di Tanggerang", nilai: "90", sertifikasi: "Ada", laporan: "Selesai"  },
-    { id: 3, namaLengkap: "Muhammad Riyan Firdaus", nis: "12108643", rombel: "PPLG XII-9", rayon: "Ciawi 1", gelombang: "2 (Dua)", perusahaan: "PT Ada di Gatau", nilai: "90", sertifikasi: "Ada", laporan: "Selesai"  },
-  ];
-
-  const [currentGelombang, setCurrentGelombang] = React.useState(1);
-
-  const currentYear = new Date().getFullYear();
 
   return (
     <ThemeProvider theme={theme}>
@@ -120,7 +165,7 @@ export default function DataLaporan() {
                 </div>
                 <Box>
                   <DataGrid
-                    rows={rows}
+                    rows={dataLaporan}
                     columns={columns}
                     initialState={{
                       pagination: {
@@ -130,7 +175,6 @@ export default function DataLaporan() {
                       },
                     }}
                     pageSizeOptions={[100]}
-                    checkboxSelection
                     disableRowSelectionOnClick
                   />
                 </Box>
